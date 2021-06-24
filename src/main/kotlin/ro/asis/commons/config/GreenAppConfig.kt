@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
 import org.springframework.amqp.support.converter.MessageConverter
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
@@ -25,4 +26,7 @@ open class GreenAppConfig(
 
     @Bean
     open fun jsonMessageConverter(): MessageConverter = Jackson2JsonMessageConverter()
+
+    @Bean
+    open fun configureJackson2() = Jackson2ObjectMapperBuilderCustomizer { it.findModulesViaServiceLoader(true) }
 }
