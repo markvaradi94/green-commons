@@ -1,5 +1,9 @@
 package ro.asis.commons.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
@@ -25,8 +29,15 @@ open class GreenAppConfig(
     }
 
     @Bean
-    open fun jsonMessageConverter(): MessageConverter = Jackson2JsonMessageConverter()
+    open fun jsonMessageConverter(): MessageConverter {
+        val mapper = ObjectMapper()
+        mapper.registerModule(JavaTimeModule())
+        mapper.registerModule(KotlinModule())
+        mapper.configure(WRITE_DATES_AS_TIMESTAMPS, false)
+        return Jackson2JsonMessageConverter(mapper)
+    }
 
     @Bean
-    open fun configureJackson2() = Jackson2ObjectMapperBuilderCustomizer { it.findModulesViaServiceLoader(true) }
+    open fun configureJackson2() =
+        Jackson2ObjectMapperBuilderCustomizer { it.findModulesViaServiceLoader(true) }
 }
