@@ -12,20 +12,14 @@ data class Address(
     @JsonProperty("zipCode")
     var zipCode: String? = null,
 
-    @NotNull
-    @NotBlank
     @JsonProperty("city")
-    var city: String,
+    var city: String? = null,
 
-    @NotNull
-    @NotBlank
     @JsonProperty("streetName")
-    var streetName: String,
+    var streetName: String? = null,
 
-    @NotNull
-    @NotBlank
     @JsonProperty("streetNumber")
-    var streetNumber: String,
+    var streetNumber: String? = null,
 
     @JsonProperty("building")
     var building: String? = null,
