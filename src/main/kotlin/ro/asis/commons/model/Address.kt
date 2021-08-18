@@ -2,8 +2,6 @@ package ro.asis.commons.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.bson.types.ObjectId
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 data class Address(
     @JsonProperty("id")

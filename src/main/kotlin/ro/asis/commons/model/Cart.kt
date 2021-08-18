@@ -11,6 +11,10 @@ data class Cart(
 
     @JsonProperty("totalPrice")
     var totalPrice: Double = 0.0
-    //TODO totalPrice will be calculated from bags
-    //TODO pass totalPrice from Cart to Order when checking out
-)
+) {
+    init {
+        totalPrice = calculateTotalPrice()
+    }
+
+    private fun calculateTotalPrice() = bags.sumOf { it.price * it.quantity }
+}
